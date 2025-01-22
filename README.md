@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Versions
+- Ruby version 3.3.4
+- Rails version 8.0.1
 
-Things you may want to cover:
+* Gems
+- devise https://github.com/heartcombo/devise
+- responders https://github.com/heartcombo/responders
 
-* Ruby version
+* Description
+This is part of the "Private Events" project from The Odin Project's Ruby on Rails course. (https://www.theodinproject.com/lessons/ruby-on-rails-private-events). The main purpose of this project is to gain experience using Active Record associations and queries.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This application will allow users to create events and invite other users to attend them.
