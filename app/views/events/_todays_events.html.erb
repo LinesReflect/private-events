@@ -1,0 +1,16 @@
+<h2>Today's Events</h2>
+
+<% if Event.none? %>
+    <p>No events are scheduld for today...</p>
+<% end %>
+
+<ul>
+    <% @events.each do |event| %>
+        <% next unless Date.today == event.event_date.to_date %>
+        <li>
+            <h3><%= event.title %></h3>
+            <%= event.location %>
+            <%= event.event_date %>
+        </li>
+    <% end %>
+</ul>
