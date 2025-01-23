@@ -1,0 +1,4 @@
+<%= link_to "Home", root_path unless request.path == root_path %>
+<%= link_to "Sign Up", new_user_registration_path unless request.path == new_user_registration_path || user_signed_in? %>
+<%= link_to "Sign In", new_user_session_path unless request.path == new_user_session_path || user_signed_in? %>
+<%= link_to "Sign Out", destroy_user_session_path if user_signed_in? %>
