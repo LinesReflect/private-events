@@ -2,15 +2,15 @@
 
 <% if @user.events.none? { |event| event.event_date.to_date > Date.today} %>
     <p>No upcoming events have been scheduled...</p>
+<% else %>
+    <ul>
+        <% @user.events.each do |event| %>
+            <% next if event.event_date.to_date =< Date.today %>
+            <li>
+                <h3><%= event.title %></h3>
+                <p> Location: <%= event.location %></p>
+                <p>Date: <%= event.event_date %></p>
+            </li>
+        <% end %>
+    </ul>
 <% end %>
-
-<ul>
-    <% @user.events.each do |event| %>
-        <% next if event.event_date.to_date =< Date.today %>
-        <li>
-            <h3><%= event.title %></h3>
-            <%= event.location %>
-            <%= event.event_date %>
-        </li>
-    <% end %>
-</ul>
