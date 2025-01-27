@@ -1,0 +1,10 @@
+<h1><%= @event.title %></h1>
+
+<h2>Created by: <%= link_to @event.creator.username, @event.creator %></h2>
+
+<p>Location: <%= @event.location %></p>
+
+<p>Date: <%= @event.event_date.year > Date.today.year ? @event.event_date.to_date.strftime('%A, %B %e %Y') : @event.event_date.to_date.strftime('%A, %B %e') %></p>
+
+<p>Details:</p>
+<%= @event.details %>

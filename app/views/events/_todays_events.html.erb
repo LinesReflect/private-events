@@ -7,7 +7,7 @@
         <% @events.sort_by { |k, v| k[:event_date] }.each do |event| %>
             <% next unless event.event_date.to_date == Date.today %>
             <li>
-                <h3><%= event.title %></h3>
+                <h3><%= link_to event.title, event %></h3>
                 <p> Location: <%= event.location %></p>
                 <p>Date: <%= event.event_date.strftime('%A, %B %e') %></p>
                 <p>Created by: <%= link_to event.creator.username, event.creator %></p>
