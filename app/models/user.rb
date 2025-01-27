@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :events
+  has_many :events, foreign_key: "user_id", class_name: "Event"
 
   def possesive_user
     self.username.last == "s" ? self.username + "s'" : self.username + "'s"

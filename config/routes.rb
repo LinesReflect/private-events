@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     sessions: "users/sessions"
   }
-  resources :events, only: [ :new, :create, :index ]
+  resources :events, only: [ :index, :new, :create, :show ]
   resources :users, only: [ :show ]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
