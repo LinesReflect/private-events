@@ -4,12 +4,12 @@
     <p>No events are scheduld for today...</p>
 <% else %>
     <ul>
-        <% @user.events.each do |event| %>
+        <% @user.events.sort_by { |k, v| k[:event_date] }.each do |event| %>
             <% next unless event.event_date.to_date == Date.today %>
             <li>
-                <h3><%= event.title %></h3>
+                <h3><%= link_to event.title, event %></h3>
                 <p> Location: <%= event.location %></p>
-                <p>Date: <%= event.event_date %></p>
+                <p>Date: <%= event.event_date.strftime('%A, %B %e, %Y') %></p>
             </li>
         <% end %>
     </ul>

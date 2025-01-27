@@ -4,12 +4,12 @@
     <p>No upcoming events have been scheduled...</p>
 <% else %>
     <ul>
-        <% @user.events.each do |event| %>
-            <% next if event.event_date.to_date =< Date.today %>
+        <% @user.events.sort_by { |k, v| k[:event_date] }.each do |event| %>
+            <% next if event.event_date.to_date <= Date.today %>
             <li>
-                <h3><%= event.title %></h3>
+                <h3><%= link_to event.title, event %></h3>
                 <p> Location: <%= event.location %></p>
-                <p>Date: <%= event.event_date %></p>
+                <p>Date: <%= event.event_date.strftime('%A, %B %e, %Y') %></p>
             </li>
         <% end %>
     </ul>
