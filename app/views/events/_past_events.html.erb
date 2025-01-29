@@ -9,7 +9,7 @@
             <li>
                 <h3><%= link_to event.title, event %></h3>
                 <p> Location: <%= event.location %></p>
-                <p>Date: <%= event.event_date.strftime('%A, %B %e %Y') %></p>
+                <p>Date: <%= event.event_date.strftime('%A, %B %e, %Y') %></p>
                 <p>Created by: <%= link_to event.creator.username, event.creator %></p>
             </li>
         <% end %>
