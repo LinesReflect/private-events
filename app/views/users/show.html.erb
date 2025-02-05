@@ -1,3 +1,12 @@
+<% if @user.event_attendees.any? %>
+    <h3><%= @user.username %> will be attending: </h3>
+    <ul>
+        <% @user.event_attendees.each do |event_attendee| %>
+            <li><%= link_to event_attendee.event.title, event_attendee.event %></li>
+        <% end %>
+    </ul>
+<% end %>
+
 <h1><%= @user.possesive_user %> Events</h1>
 
 <%= render "users/shared/user_today_events" %>
