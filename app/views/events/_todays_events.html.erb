@@ -1,11 +1,10 @@
 <h2>Today's Events</h2>
 
-<% if @events.none? { |event| event.event_date == Date.today }  %>
+<% if @events.today.none?  %>
     <p>No events are scheduld for today...</p>
 <% else %>
     <ul>
-        <% @events.sort_by { |k, v| k[:event_date] }.each do |event| %>
-            <% next unless event.event_date.to_date == Date.today %>
+        <% @events.today.each do |event| %>
             <li>
                 <h3><%= link_to event.title, event %></h3>
                 <p> Location: <%= event.location %></p>

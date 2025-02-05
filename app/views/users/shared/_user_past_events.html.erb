@@ -1,11 +1,10 @@
 <h2>Past Events</h2>
 
-<% if @user.events.none? { |event| event.event_date.to_date < Date.today} %>
+<% if @user.events.past.none? %>
     <p>No events have concluded...</p>
 <% else %>
     <ul>
-        <% @user.events.sort_by { |k, v| k[:event_date] }.each do |event| %>
-            <% next if event.event_date.to_date >= Date.today %>
+        <% @user.events.past.sort_by { |k, v| k[:event_date] }.each do |event| %>
             <li>
                 <h3><%= link_to event.title, event %></h3>
                 <p> Location: <%= event.location %></p>
