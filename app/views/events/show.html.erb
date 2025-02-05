@@ -1,10 +1,30 @@
-<h1><%= @event.title %></h1>
+<div>
+    <h1><%= @event.title %></h1>
+    
+    <h2>Created by: <%= link_to @event.creator.username, @event.creator %></h2>
+    
+    <p>Location: <%= @event.location %></p>
+    
+    <p>Date: <%= @event.event_date.to_date.strftime('%A, %B %e, %Y')%></p>
+    
+    <p>Details:</p>
+    <%= @event.details %>
+</div>
 
-<h2>Created by: <%= link_to @event.creator.username, @event.creator %></h2>
+<% if Date.today < @event.event_date  %>
+    <div>
+        <p>Click the button below if you plan on attending</p>
+        <%= button_to "Attend", event_attendees_path(event_attendee: {attended_event_id: @event, attendee_id: current_user} ) %>
+    </div>
+<% end %>
 
-<p>Location: <%= @event.location %></p>
-
-<p>Date: <%= @event.event_date.to_date.strftime('%A, %B %e, %Y')%></p>
-
-<p>Details:</p>
-<%= @event.details %>
+<div>
+    <h2>Attendees: </h2>
+    <ul>
+        <% @event.attendees.each do |attendee| %>
+            <li>
+                <%= attendee.username %>
+            </li>
+        <% end %>
+    </ul>
+</div>

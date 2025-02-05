@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :events, foreign_key: "user_id", class_name: "Event"
-  has_and_belongs_to_many :attended_events, class_name: "Event"
+  has_many :event_attendees
+  has_many :attended_events, through: :event_attendees, source: :event
 
   def possesive_user
     self.username.last == "s" ? self.username + "s'" : self.username + "'s"

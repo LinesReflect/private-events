@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     sessions: "users/sessions"
   }
   resources :events, only: [ :index, :new, :create, :show ]
+  resources :event_attendees
+  post "events/:event_id/event_attendees/new", to: "event_attendees#create"
   resources :users, only: [ :show ]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
