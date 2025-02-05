@@ -11,20 +11,15 @@
     <%= @event.details %>
 </div>
 
-<% if Date.today < @event.event_date  %>
-    <div>
-        <p>Click the button below if you plan on attending</p>
-        <%= button_to "Attend", event_attendees_path(event_attendee: {attended_event_id: @event, attendee_id: current_user} ) %>
-    </div>
-<% end %>
+<div>
+    <% if Date.today < @event.event_date  %>
+        <div>
+            <p>Click the button below if you plan on attending</p>
+            <%= button_to "Attend", event_attendees_path(event_attendee: {attended_event_id: @event, attendee_id: current_user} ) %>
+        </div>
+    <% end %>
+</div>
 
 <div>
-    <h2>Attendees: </h2>
-    <ul>
-        <% @event.attendees.each do |attendee| %>
-            <li>
-                <%= attendee.username %>
-            </li>
-        <% end %>
-    </ul>
+    <h2>Attendees: <%= @event.event_attendees.count %></h2>
 </div>
