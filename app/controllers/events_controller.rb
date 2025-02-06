@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :require_login, only: [ :new, :create, :edit, :update ]
   before_action :verify_creator, only: [ :edit, :update ]
-  before_action
+  before_action :check_if_passed, only: [ :edit, :update ]
   def index
     @events = Event.all
   end
@@ -54,6 +54,13 @@ class EventsController < ApplicationController
   def verify_creator
     unless current_user.events.include?(Event.find(params[:id]))
       flash[:notice] = "Only the creator of this event has authority to do that action!"
+      redirect_to event_path(params[:id])
+    end
+  end
+
+  def check_if_passed
+    if Event.past.include?(Event.find(params[:id]))
+      flash[:notice] = "Events that have passed cannot be edited!"
       redirect_to event_path(params[:id])
     end
   end
