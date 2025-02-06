@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     sessions: "users/sessions"
   }
-  resources :events, only: [ :index, :new, :create, :show ]
+  resources :events
   resources :event_attendees
   post "events/:event_id/event_attendees/new", to: "event_attendees#create"
   resources :users, only: [ :show ]
