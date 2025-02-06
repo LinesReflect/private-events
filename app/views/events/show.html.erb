@@ -12,7 +12,7 @@
 </div>
 
 <div>
-    <% unless Event.past.include?(@event) || current_user != @event.user %>
+    <% unless Event.past.include?(@event) || !current_user.events.include?(@event) %>
         <p><%= link_to "Edit event", edit_event_path %></p>
     <% end %>
 </div>
