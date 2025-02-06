@@ -12,6 +12,12 @@
 </div>
 
 <div>
+    <% unless Event.past.include?(@event) %>
+        <p><%= link_to "Edit event", edit_event_path %></p>
+    <% end %>
+</div>
+
+<div>
     <h2>Attendees: <%= @event.event_attendees.count %></h2>
 </div>
 
