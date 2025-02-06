@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_action :require_login, only: [ :new, :create, :edit, :update ]
   def index
     @events = Event.all
   end
@@ -39,5 +40,12 @@ class EventsController < ApplicationController
 
   def event_params
     params.expect(event: [ :title, :location, :event_date, :details ])
+  end
+
+  def require_login
+    unless current_user
+      flash[:error] = "You must login to do this action"
+      redirect_to new_user_session_path
+    end
   end
 end
