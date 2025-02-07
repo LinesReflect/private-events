@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
-  before_action :require_login, only: [ :new, :create, :edit, :update ]
-  before_action :verify_creator, only: [ :edit, :update ]
-  before_action :check_if_passed, only: [ :edit, :update ]
+  before_action :require_login, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :verify_creator, only: [ :edit, :update, :destroy ]
+  before_action :check_if_passed, only: [ :edit, :update, :destroy ]
   def index
     @events = Event.all
   end
@@ -36,6 +36,12 @@ class EventsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @event = Event.find(params[:id])
+    @event.destroy
+    redirect_to current_user
   end
 
   private

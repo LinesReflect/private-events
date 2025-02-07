@@ -18,6 +18,12 @@
 </div>
 
 <div>
+    <% unless Event.past.include?(@event) || !current_user.events.include?(@event) %>
+        <p><%= button_to "Delete event", @event, method: :delete, form: { data: { turbo_confirm: "Are you sure?" } } %></p>
+    <% end %>
+</div>
+
+<div>
     <h2>Attendees: <%= @event.event_attendees.count %></h2>
 </div>
 
