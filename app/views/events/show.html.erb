@@ -19,7 +19,7 @@
 
 <div>
     <% unless Event.past.include?(@event) || !current_user.events.include?(@event) %>
-        <p><%= button_to "Delete event", @event, method: :delete, form: { data: { turbo_confirm: "Are you sure?" } } %></p>
+        <p><%= link_to "Delete", @event, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}%></p>
     <% end %>
 </div>
 
