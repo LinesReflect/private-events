@@ -12,13 +12,13 @@
 </div>
 
 <div>
-    <% unless Event.past.include?(@event) || !current_user.events.include?(@event) %>
+    <% unless Event.past.include?(@event) || !current_user || !current_user.events.include?(@event) %>
         <p><%= link_to "Edit event", edit_event_path %></p>
     <% end %>
 </div>
 
 <div>
-    <% unless Event.past.include?(@event) || !current_user.events.include?(@event) %>
+    <% unless Event.past.include?(@event) || !current_user || !current_user.events.include?(@event) %>
         <p><%= link_to "Delete", @event, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}%></p>
     <% end %>
 </div>
@@ -28,10 +28,11 @@
 </div>
 
 <div>
-    <% if Date.today < @event.event_date  %>
-        <div>
-            <p>Click the button below if you plan on attending</p>
-            <%= button_to "Attend", event_attendees_path(event_attendee: {attended_event_id: @event, attendee_id: current_user} ) %>
-        </div>
+    <% if (Date.today < @event.event_date && current_user && !current_user.attended_events.include?(@event)) || (current_user && !current_user.attended_events.include?(@event))  %>
+        <p>Click the button below if you plan on attending</p>
+        <%= button_to "Attend", event_attendees_path(event_attendee: {attended_event_id: @event, attendee_id: current_user} ) %>
+    <% elsif current_user && current_user.attended_events.include?(@event) %>
+        <p>Click the button below to cancel your attendee status</p>
+        <%= link_to "Cancel Attendance", event_attendee_path, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}%>
     <% end %>
 </div>

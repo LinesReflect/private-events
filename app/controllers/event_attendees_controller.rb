@@ -18,6 +18,14 @@ class EventAttendeesController < ApplicationController
     end
   end
 
+  def destroy
+    @event = Event.find(params[:id])
+    @attendee = current_user
+    @event_attendee = EventAttendee.where(event_id: @event, user_id: @attendee)
+    EventAttendee.destroy(@event_attendee)
+    redirect_to @event
+  end
+
   private
 
   def event_attendee_params

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :events
   resources :event_attendees
   post "events/:event_id/event_attendees/new", to: "event_attendees#create"
+  delete "/event_attendees/:event_id", to: "event_attendees#destroy"
   resources :users, only: [ :show ]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
