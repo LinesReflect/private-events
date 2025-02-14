@@ -4,7 +4,10 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     sessions: "users/sessions"
   }
-  resources :events
+  resources :events do
+    # put "/events/:id", to: "events#change_availability"
+    resources :event_invites
+  end
   resources :event_attendees
   post "events/:event_id/event_attendees/new", to: "event_attendees#create"
   delete "/event_attendees/:event_id", to: "event_attendees#destroy"

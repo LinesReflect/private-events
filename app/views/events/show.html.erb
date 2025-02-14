@@ -2,13 +2,23 @@
     <h1><%= @event.title %></h1>
     
     <h2>Created by: <%= link_to @event.creator.username, @event.creator %></h2>
+
+    <p>
+        Open to: <b/><%= @event.is_private? ? "Invitation Only" : "Public" %></b>
+
+        <% if current_user && @event.creator == current_user && @event.is_private? %>
+            <%= link_to "Make Public", event_path(@event, event: {is_private: false}), data: {turbo_method: :patch, turbo_confirm: "Are you sure?"} %>
+        <% elsif current_user && @event.creator == current_user && !@event.is_private? %>
+            <%= link_to "Make Private", event_path(@event, event: {is_private: true}), data: {turbo_method: :patch, turbo_confirm: "Are you sure?"} %>
+        <% end %>
+    </p>
     
     <p>Location: <%= @event.location %></p>
     
     <p>Date: <%= @event.event_date.to_date.strftime('%A, %B %e, %Y')%></p>
     
     <p>Details:</p>
-    <%= @event.details %>
+    <p><%= @event.details %></p>
 </div>
 
 <div>
@@ -24,15 +34,25 @@
 </div>
 
 <div>
+    <% if current_user && current_user.events.include?(@event) && Date.today <= @event.event_date && @event.is_private? %>
+        <%= link_to "Invite Guests", new_event_event_invite_path(@event) %>
+    <% end %>
+</div>
+
+<div>
     <h2>Attendees: <%= @event.event_attendees.count %></h2>
 </div>
 
 <div>
-    <% if (Date.today < @event.event_date && current_user && !current_user.attended_events.include?(@event)) || (current_user && !current_user.attended_events.include?(@event))  %>
-        <p>Click the button below if you plan on attending</p>
-        <%= button_to "Attend", event_attendees_path(event_attendee: {attended_event_id: @event, attendee_id: current_user} ) %>
-    <% elsif current_user && current_user.attended_events.include?(@event) %>
-        <p>Click the button below to cancel your attendee status</p>
-        <%= link_to "Cancel Attendance", event_attendee_path, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}%>
+    <% unless Event.private_events.include?(@event) && !@event.invited.include?(current_user) %>
+        <% if (Date.today < @event.event_date && current_user && !current_user.attended_events.include?(@event)) || (current_user && !current_user.attended_events.include?(@event))  %>
+            <p>Click the button below if you plan on attending</p>
+            <%= button_to "Attend", event_attendees_path(event_attendee: {attended_event_id: @event, attendee_id: current_user} ) %>
+        <% elsif current_user && current_user.attended_events.include?(@event) %>
+            <p>Click the button below to cancel your attendee status</p>
+            <%= link_to "Cancel Attendance", event_attendee_path, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}%>
+        <% end %>
     <% end %>
 </div>
+
+

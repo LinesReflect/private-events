@@ -1,0 +1,27 @@
+<%= form_for([@event, @event_invite])  do |form| %>
+  <% if event_invite.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(event_invite.errors.count, "error") %> prohibited this event_invite from being saved:</h2>
+
+      <ul>
+        <% event_invite.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <% User.all.each do |user| %>
+      <% next if @event.invited.include?(user) || current_user == user %>
+      <div>
+        <%= form.radio_button :user_id, user.id %>
+        <%= form.label :user_id, "#{user.username}", value: user.id %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit "Invite" %>
+  </div>
+<% end %>

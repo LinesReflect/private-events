@@ -10,6 +10,7 @@
                 <p> Location: <%= event.location %></p>
                 <p>Date: <%= event.event_date.to_date.strftime('%A, %B %e, %Y') %></p>
                 <p>Created by: <%= link_to event.creator.username, event.creator %></p>
+                <p>Open to: <b/><%= event.is_private? ? "Invitation Only" : "Public" %></b></p>
             </li>
         <% end %>
     </ul>

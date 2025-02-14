@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_action :set_event, only: [ :show, :edit, :update, :change_availability, :destroy ]
   before_action :require_login, only: [ :new, :create, :edit, :update, :destroy ]
   before_action :verify_creator, only: [ :edit, :update, :destroy ]
   before_action :check_if_passed, only: [ :edit, :update, :destroy ]
@@ -21,16 +22,14 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event
   end
 
   def edit
-    @event = Event.find(params[:id])
+    @event
   end
 
   def update
-    @event = Event.find(params[:id])
-
     if @event.update(event_params)
       redirect_to @event
     else
@@ -38,16 +37,23 @@ class EventsController < ApplicationController
     end
   end
 
+  def change_availability
+    @event.is_private = @event.is_private? ? false : true
+  end
+
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
     redirect_to current_user
   end
 
   private
 
+  def set_event
+    @event = Event.find(params[:id])
+  end
+
   def event_params
-    params.expect(event: [ :title, :location, :event_date, :details ])
+    params.expect(event: [ :title, :location, :event_date, :details, :is_private ])
   end
 
   def require_login
