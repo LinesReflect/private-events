@@ -21,10 +21,11 @@ class EventInvitesController < ApplicationController
   end
 
   def create
-    @invited_user = User.find_by(event_invite_params[:user_id])
+    @invited_user = User.find(event_invite_params[:user_id])
     @invitation = @event.event_invites.build(event: @event, user: @invited_user)
 
     @invitation.save
+    flash[:notice] = "Invitiation successfully sent to #{@invited_user.username}"
     redirect_to @event
   end
 
