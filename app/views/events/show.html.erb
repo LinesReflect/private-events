@@ -34,8 +34,14 @@
 </div>
 
 <div>
-    <% if current_user && current_user.events.include?(@event) && Date.today <= @event.event_date && @event.is_private? %>
-        <%= link_to "Invite Guests", new_event_event_invite_path(@event) %>
+    <% if current_user && current_user.events.include?(@event) && Date.today <= @event.event_date && @event.is_private? && !@event.invited.include?(User.all) %>
+        <p><%= link_to "Invite Guests", new_event_event_invite_path(@event) %></p>
+    <% end %>
+</div>
+
+<div>
+    <% if current_user && current_user.events.include?(@event) && Date.today <= @event.event_date && @event.is_private? && @event.invited.any? %>
+        <p><%= link_to "Uninvite Guests", event_event_invites_path(@event) %></p>
     <% end %>
 </div>
 

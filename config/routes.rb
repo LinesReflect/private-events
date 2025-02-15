@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :events do
     # put "/events/:id", to: "events#change_availability"
     resources :event_invites
+    delete "/event_invites", to: "event_invites#destroy"
   end
   resources :event_attendees
   post "events/:event_id/event_attendees/new", to: "event_attendees#create"

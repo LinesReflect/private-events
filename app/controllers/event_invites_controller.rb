@@ -1,5 +1,5 @@
 class EventInvitesController < ApplicationController
-  before_action :set_event, only: [ :show, :create, :edit, :update, :destroy ]
+  before_action :set_event, only: [ :index, :show, :create, :edit, :update, :destroy ]
 
   respond_to :html
 
@@ -9,6 +9,7 @@ class EventInvitesController < ApplicationController
   end
 
   def show
+    @event_invite = EventInvite.where(event_id: @event, user_id: event_invite_params[:user_id])
     respond_with(@event_invite)
   end
 
@@ -35,8 +36,12 @@ class EventInvitesController < ApplicationController
   end
 
   def destroy
-    @event_invite.destroy!
-    respond_with(@event_invite)
+    @event_invite = EventInvite.find(params[:id])
+    @event = @event_invite.event
+    @invited_user = @event_invite.user
+    @event_invite.destroy
+    flash[:notice] = "Invitiation successfully sent to #{@invited_user.username}"
+    redirect_to @event
   end
 
   private
